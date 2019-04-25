@@ -16,46 +16,43 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let Months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
 
     var DaysInMonths = [31,28,31,30,31,30,31,31,30,31,30,31]
-    var month = calendar.component(.month, from: date) - 1
+    var current_month = calendar.component(.month, from: date) - 1
     var year = calendar.component(.year, from: date)
-    var currentMonth = String()
     var startingDayOfWeek = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentMonth = Months[month]
-        MonthLabel.text = "\(currentMonth) \(year)"
-        GetStartDateDayPosition()
+        MonthLabel.text = "\(Months[current_month]) \(year)"
+        getStartDateDayPosition()
     }
     
-    func GetStartDateDayPosition() {
-        startingDayOfWeek = getDayOfWeek(year: year, month: month)
+    func getStartDateDayPosition() {
+        startingDayOfWeek = getDayOfWeek(year: year, month: current_month)
     }
 
-    @IBAction func Next(_ sender: Any) {
+    @IBAction func _Next(_ sender: Any) {
         updateSelectedDate(monthCheck: "December", monthReset: 0, updateValue: 1)
     }
     
-    @IBAction func Back(_ sender: Any) {
+    @IBAction func _Back(_ sender: Any) {
         updateSelectedDate(monthCheck: "January", monthReset: 11, updateValue: -1)
     }
     
     func updateSelectedDate(monthCheck: String, monthReset: Int, updateValue: Int){
-        if currentMonth == monthCheck{
-            month = monthReset
+        if Months[current_month] == monthCheck{
+            current_month = monthReset
             year += updateValue
             checkAndUpdateLeapYear()
         }else{
-            month += updateValue
+            current_month += updateValue
         }
         
         getStartDateAndUpdateMonth()
     }
     
     func getStartDateAndUpdateMonth(){
-        GetStartDateDayPosition()
-        currentMonth = Months[month]
-        MonthLabel.text = "\(currentMonth) \(year)"
+        getStartDateDayPosition()
+        MonthLabel.text = "\(Months[current_month]) \(year)"
         Calendar.reloadData()
     }
    
@@ -72,7 +69,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     // Return the number of cells
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return startingDayOfWeek + DaysInMonths[month]
+        return startingDayOfWeek + DaysInMonths[current_month]
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,7 +83,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let day_number = indexPath.row + 1 - startingDayOfWeek
         cell.DateLabel.text = "\(day_number)"
 
-        if month == todaysMonth && year == todaysYear && day == day_number{
+        if current_month == todaysMonth && year == todaysYear && day == day_number{
             cell.Circle.isHidden = false
             cell.DrawCircle()
         }

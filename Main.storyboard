@@ -30,7 +30,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Next"/>
                                 <connections>
-                                    <action selector="Next:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lPh-sA-M0z"/>
+                                    <action selector="_Next:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lPh-sA-M0z"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aYg-l0-1g6">
@@ -130,7 +130,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
-                                    <action selector="Back:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s7k-Ga-ghK"/>
+                                    <action selector="_Back:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s7k-Ga-ghK"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -10,10 +10,8 @@ class DateCell: UICollectionViewCell {
     
     
     func DrawCircle() {
-        
-        let circleCenter = Circle.center
-        
-        let circlePath = UIBezierPath(arcCenter: circleCenter, radius: (Circle.bounds.width/2 - 5), startAngle: -CGFloat.pi/2, endAngle: (2 * CGFloat.pi), clockwise: true)
+        let bWidth = Circle.bounds.width
+        let circlePath = UIBezierPath(arcCenter: Circle.center, radius: (bWidth/2 - bWidth/7), startAngle: CGFloat(0), endAngle: CGFloat(CGFloat.pi * 2), clockwise: true)
         
         let CircleLayer = CAShapeLayer()
         CircleLayer.path = circlePath.cgPath
