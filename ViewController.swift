@@ -19,6 +19,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var current_month = calendar.component(.month, from: date) - 1
     var year = calendar.component(.year, from: date)
     var startingDayOfWeek = 0
+    var cellsArray: [UICollectionViewCell] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +33,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     @IBAction func _Next(_ sender: Any) {
         updateSelectedDate(monthCheck: "December", monthReset: 0, updateValue: 1)
+        animateLabelMoveHorizontal(Label: MonthLabel, directionValue: 70)
     }
     
     @IBAction func _Back(_ sender: Any) {
         updateSelectedDate(monthCheck: "January", monthReset: 11, updateValue: -1)
+        animateLabelMoveHorizontal(Label: MonthLabel, directionValue: -70)
     }
     
     func updateSelectedDate(monthCheck: String, monthReset: Int, updateValue: Int){
@@ -53,6 +56,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func getStartDateAndUpdateMonth(){
         getStartDateDayPosition()
         MonthLabel.text = "\(Months[current_month]) \(year)"
+        cellsArray.removeAll()
         Calendar.reloadData()
     }
    
@@ -67,6 +71,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
 
+    func animateLabelMoveHorizontal(Label : UILabel, directionValue: CGFloat){
+        let xCenter = Label.center.x
+        let yCenter = Label.center.y
+        let animatePos = CABasicAnimation(keyPath: "position")
+        animatePos.fromValue = NSValue(cgPoint: CGPoint(x: xCenter + directionValue, y: yCenter))
+        animatePos.toValue = NSValue(cgPoint: CGPoint(x: xCenter, y: yCenter))
+        animatePos.duration = 0.3
+        
+        let animateFade = CABasicAnimation(keyPath: "opacity")
+        animateFade.fromValue = 0
+        animateFade.toValue = 1
+        animateFade.duration = 0.3
+        
+        Label.layer.add(animatePos, forKey: nil)
+        Label.layer.add(animateFade, forKey: nil)
+    }
+    
     // Return the number of cells
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return startingDayOfWeek + DaysInMonths[current_month]
@@ -87,7 +108,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.Circle.isHidden = false
             cell.DrawCircle()
         }
+        cellsArray.append(cell)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.alpha = 0
+        cell.layer.transform = CATransform3DMakeScale(0.5, 0.5, 0.5)
+        
+        for x in cellsArray{
+            let currentCell: UICollectionViewCell = x
+            UIView.animate(withDuration: 1, delay: 0.01 * Double(indexPath.row), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
+                currentCell.alpha = 1
+                currentCell.layer.transform = CATransform3DMakeScale(1, 1, 1)
+            })
+        }
     }
 }
 
