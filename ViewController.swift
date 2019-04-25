@@ -9,8 +9,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var Calendar: UICollectionView!
     @IBOutlet weak var MonthLabel: UILabel!
     
-    @IBOutlet weak var TestingLabel: UILabel!
-    
     let day = calendar.component(.day , from: date)
     let todaysMonth = calendar.component(.month, from: date) - 1
     let todaysYear = calendar.component(.year, from: date)
@@ -32,7 +30,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func GetStartDateDayPosition() {
         startingDayOfWeek = getDayOfWeek(year: year, month: month)
-        TestingLabel.text = "\(startingDayOfWeek)"
     }
 
     @IBAction func Next(_ sender: Any) {
