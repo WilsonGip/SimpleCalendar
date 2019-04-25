@@ -2,7 +2,7 @@
 
 import UIKit
 
-class DateCollectionViewCell: UICollectionViewCell {
+class DateCell: UICollectionViewCell {
     
     @IBOutlet weak var DateLabel: UILabel!
     
